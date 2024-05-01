@@ -1,21 +1,30 @@
 {
   "expo": {
-    "name": "MonCoach",
-    "slug": "MonCoach",
+    "name": "Mon coach",
+    "slug": "mon-coach",
     "version": "1.0.0",
+    "scheme": "moncoach",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#333"
     },
-    "assetBundlePatterns": [
-      "**/*"
+    "plugins": [
+      "expo-apple-authentication",
+      "expo-secure-store",
+      "expo-router"
     ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "usesAppleSignIn": true,
+      "config": {
+        "useNonExcemptEncryption": false
+      },
+      "bundleIdentifier": "com.moncoach.expoappleauth"
     },
     "android": {
       "adaptiveIcon": {
@@ -24,7 +33,13 @@
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "7a99fba5-ce6e-485d-b848-b72779f11210"
+      }
     }
   }
 }
