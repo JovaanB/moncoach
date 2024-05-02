@@ -24,10 +24,16 @@ function useProtectedRoute(user: any) {
   useEffect(() => {
     const inAuthGroup = segments[0] === "(auth)";
 
-    if (!user && !inAuthGroup) {
+    console.log({
+      user,
+      inAuthGroup,
+    });
+
+    if (!user && inAuthGroup) {
       router.replace("/login");
-    } else if (user && inAuthGroup) {
-      router.replace("/home");
+    } else if (user && !inAuthGroup) {
+      console.log("ici2");
+      router.replace("/(auth)/(tabs)/");
     }
   }, [user, segments]);
 }

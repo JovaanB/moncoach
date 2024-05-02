@@ -44,12 +44,6 @@ export default function Login() {
     }
   };
 
-  const getCredentialsState = async () => {
-    const credentialState = await AppleAuthentication.getCredentialStateAsync(
-      userToken!.user
-    );
-  };
-
   const logout = async () => {
     await SecureStore.deleteItemAsync("apple-credentials");
     setUserToken(null);
@@ -94,7 +88,6 @@ export default function Login() {
           <Text>Expired : {(current >= decoded.exp).toString()}</Text>
           <Button title="Logout" onPress={logout} />
           <Button title="Refresh" onPress={refresh} />
-          <Button title="Get credentials state" onPress={getCredentialsState} />
         </View>
       );
     }

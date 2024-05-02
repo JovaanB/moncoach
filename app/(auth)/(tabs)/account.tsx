@@ -1,6 +1,5 @@
-import { View, Text, Pressable } from "react-native";
-import { useAuth } from "../../context/AuthProvider";
-import { Link } from "expo-router";
+import { Text } from "react-native";
+import { useAuth } from "../../../context/AuthProvider";
 import {
   GestureHandlerRootView,
   TouchableOpacity,
@@ -14,10 +13,7 @@ export default function Accout() {
       style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
     >
       <Text>Account</Text>
-      <Text>{user && user.name}</Text>
-      <Link href="/other">
-        <Text>Other</Text>
-      </Link>
+      <Text>{user && user.email}</Text>
       <TouchableOpacity onPress={() => setUser(null)}>
         <Text>Log out</Text>
       </TouchableOpacity>
