@@ -6,7 +6,7 @@ import {
 } from "react-native-gesture-handler";
 
 export default function Accout() {
-  const { setUser, user } = useAuth();
+  const { user, logout } = useAuth();
 
   return (
     <GestureHandlerRootView
@@ -14,7 +14,7 @@ export default function Accout() {
     >
       <Text>Account</Text>
       <Text>{user && user.email}</Text>
-      <TouchableOpacity onPress={() => setUser(null)}>
+      <TouchableOpacity onPress={logout}>
         <Text>Log out</Text>
       </TouchableOpacity>
     </GestureHandlerRootView>

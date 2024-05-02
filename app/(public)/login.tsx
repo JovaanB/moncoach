@@ -9,7 +9,7 @@ import "core-js/stable/atob";
 import { useAuth } from "../../context/AuthProvider";
 
 export default function Login() {
-  const { setUser } = useAuth();
+  const { setUser, login } = useAuth();
   const [appleAuthAvailable, setAppleAuthAvailable] = useState(false);
   const [userToken, setUserToken] =
     useState<AppleAuthentication.AppleAuthenticationCredential | null>(null);
@@ -29,35 +29,6 @@ export default function Login() {
     checkAvailability();
   }, []);
 
-  const login = async () => {
-    try {
-      const credential = await AppleAuthentication.signInAsync({
-        requestedScopes: [
-          AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
-          AppleAuthentication.AppleAuthenticationScope.EMAIL,
-        ],
-      });
-      setUserToken(credential);
-      SecureStore.setItemAsync("apple-credentials", JSON.stringify(credential));
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  const logout = async () => {
-    await SecureStore.deleteItemAsync("apple-credentials");
-    setUserToken(null);
-    setUser(null);
-  };
-
-  const refresh = async () => {
-    const credential = await AppleAuthentication.refreshAsync({
-      user: userToken!.user,
-    });
-    SecureStore.setItemAsync("apple-credentials", JSON.stringify(credential));
-    setUserToken(credential);
-  };
-
   const getAppleAuthContent = () => {
     if (!userToken) {
       return (
@@ -73,23 +44,11 @@ export default function Login() {
       const decoded = jwtDecode<{
         email: string;
         exp: number;
-      }>(
-        "eyJraWQiOiJCaDZIN3JIVm1iIiwiYWxnIjoiUlMyNTYifQ.eyJpc3MiOiJodHRwczovL2FwcGxlaWQuYXBwbGUuY29tIiwiYXVkIjoiaG9zdC5leHAuRXhwb25lbnQiLCJleHAiOjE3MTQ1OTc5NTQsImlhdCI6MTcxNDUxMTU1NCwic3ViIjoiMDAwODMyLjQxOTY1YWVjNDUxYTRlMDA5OGM2ODFlMTI3NDYxNDAxLjIwNDEiLCJjX2hhc2giOiJfTkYtNnZMTVYxR25kWFZ6b0I3VklRIiwiZW1haWwiOiJiaWVudmVudWpvdmFuQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJhdXRoX3RpbWUiOjE3MTQ1MTE1NTQsIm5vbmNlX3N1cHBvcnRlZCI6dHJ1ZX0.K2q3PNvN7DDIY3SbnBtvXdARmkcyuR8Hux-z40KhjaHW_ZK4ub3p532_G0wyMtzJJqGNjDaxpumnI6Mfy_aaXrWxmLhTP4pl--TA1-HcNfKw60UFgXWvleBncSj6Ko-rINJQaxlc0gkbZlylnEnQsoTIyaGv5YLyON0BQpnKxxZpB_jI5qj6XOJMp2v_REWZkFw2y7da8ZkrXqNX67EdxP70stgkYcOeG24cd0J0agwMlc7vnSd5uqAIBwyTC9UG_Hele_6aDcsWUSnFjTxV0F_KVDRFs8i1KIcAEX0wOVvW-PWH8Xpt-px0SxlwwC7UI1az8GQaCy-r1hWA64Th_g"
-      );
-      const current = new Date().getTime() / 1000;
+      }>(userToken.identityToken!);
 
       setUser({
         email: decoded.email,
       });
-
-      return (
-        <View>
-          <Text>{decoded.email}</Text>
-          <Text>Expired : {(current >= decoded.exp).toString()}</Text>
-          <Button title="Logout" onPress={logout} />
-          <Button title="Refresh" onPress={refresh} />
-        </View>
-      );
     }
   };
 

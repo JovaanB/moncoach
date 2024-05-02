@@ -20,7 +20,7 @@ export default function TabsLayout() {
         tabBarStyle: Platform.OS === "ios" && {
           backgroundColor: "transparent",
         },
-        headerShown: false,
+        // headerShown: false,
       }}
       tabBar={(props) =>
         Platform.OS === "ios" ? (
@@ -39,6 +39,7 @@ export default function TabsLayout() {
         name="index"
         options={{
           title: "Home",
+          headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
         }}
       />
@@ -46,6 +47,7 @@ export default function TabsLayout() {
         name="account"
         options={{
           title: "Account",
+          headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
         }}
       />
