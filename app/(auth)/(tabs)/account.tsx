@@ -1,9 +1,7 @@
 import { Text } from "react-native";
 import { useAuth } from "../../../context/AuthProvider";
-import {
-  GestureHandlerRootView,
-  TouchableOpacity,
-} from "react-native-gesture-handler";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { Button } from "react-native-paper";
 
 export default function Accout() {
   const { user, logout } = useAuth();
@@ -14,9 +12,9 @@ export default function Accout() {
     >
       <Text>Account</Text>
       <Text>{user && user.email}</Text>
-      <TouchableOpacity onPress={logout}>
-        <Text>Log out</Text>
-      </TouchableOpacity>
+      <Button style={{ marginTop: 6 }} mode="elevated" onPress={logout}>
+        Logout
+      </Button>
     </GestureHandlerRootView>
   );
 }

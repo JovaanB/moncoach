@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { View, StyleSheet, Text, TextInput, Button } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import * as AppleAuthentication from "expo-apple-authentication";
@@ -9,7 +9,8 @@ import "core-js/stable/atob";
 import { useAuth } from "../../context/AuthProvider";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../config/firebase.config";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
+import { Button, TextInput } from "react-native-paper";
 
 export default function Signup() {
   const { setUser, login } = useAuth();
@@ -50,7 +51,7 @@ export default function Signup() {
           buttonType={AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN}
           buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.BLACK}
           cornerRadius={5}
-          style={styles.button}
+          style={styles.appleButton}
           onPress={login}
         />
       );
@@ -70,39 +71,53 @@ export default function Signup() {
     <SafeAreaProvider>
       <View style={styles.container}>
         <TextInput
+          mode="outlined"
           autoCapitalize="none"
           autoComplete="email"
-          placeholder="Email"
+          label="Email"
           inputMode="email"
           style={styles.input}
           onChangeText={(email) => setEmail(email)}
         />
         <TextInput
+          mode="outlined"
           secureTextEntry
           autoComplete="current-password"
           autoCapitalize="none"
-          placeholder="Mot de passe"
+          label="Mot de passe"
           style={styles.input}
           onChangeText={(password) => setPassword(password)}
         />
         <Button
-          title="Se connecter"
+          icon="login"
+          style={styles.button}
+          mode="elevated"
+          disabled={!email || !password}
           onPress={() => {
             signin(email, password);
           }}
-        />
-
-        <Link style={styles.link} replace href="/signup">
-          Créer un compte
-        </Link>
-
-        <Text style={styles.text}>OU</Text>
+        >
+          Se connecter
+        </Button>
 
         {appleAuthAvailable ? (
           getAppleAuthContent()
         ) : (
           <Text>Apple Auth not available</Text>
         )}
+
+        <Text style={styles.text}>OU</Text>
+
+        <Button
+          icon="account-plus"
+          mode="contained-tonal"
+          style={styles.button}
+          onPress={() => {
+            router.replace("/signup");
+          }}
+        >
+          Créer un compte
+        </Button>
       </View>
       <StatusBar style="auto" />
     </SafeAreaProvider>
@@ -115,26 +130,25 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  button: {
+  appleButton: {
     width: 200,
     height: 44,
+    borderRadius: 4,
+    marginTop: 4,
+  },
+  button: {
+    width: 200,
+    marginTop: 10,
+    borderRadius: 4,
   },
   input: {
     height: 40,
     width: 200,
-    margin: 12,
-    borderWidth: 1,
     borderRadius: 4,
-    padding: 10,
   },
   text: {
     fontSize: 20,
     fontWeight: "bold",
-    margin: 10,
-  },
-  link: {
-    color: "blue",
-    textDecorationLine: "underline",
     margin: 10,
   },
 });
