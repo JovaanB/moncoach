@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { View, StyleSheet, Text, Button } from "react-native";
+import { View, StyleSheet, Text, TextInput, Button } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import * as AppleAuthentication from "expo-apple-authentication";
@@ -7,12 +7,25 @@ import { jwtDecode } from "jwt-decode";
 import * as SecureStore from "expo-secure-store";
 import "core-js/stable/atob";
 import { useAuth } from "../../context/AuthProvider";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../config/firebase.config";
 
 export default function Login() {
   const { setUser, login } = useAuth();
   const [appleAuthAvailable, setAppleAuthAvailable] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [userToken, setUserToken] =
     useState<AppleAuthentication.AppleAuthenticationCredential | null>(null);
+
+  const signin = async (email: string, password: string) => {
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      setUser({ email });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     const checkAvailability = async () => {
@@ -33,7 +46,7 @@ export default function Login() {
     if (!userToken) {
       return (
         <AppleAuthentication.AppleAuthenticationButton
-          buttonType={AppleAuthentication.AppleAuthenticationButtonType.SIGN_UP}
+          buttonType={AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN}
           buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.BLACK}
           cornerRadius={5}
           style={styles.button}
@@ -55,6 +68,23 @@ export default function Login() {
   return (
     <SafeAreaProvider>
       <View style={styles.container}>
+        <TextInput
+          placeholder="Email"
+          onChangeText={(email) => setEmail(email)}
+        />
+        <TextInput
+          placeholder="Mot de passe"
+          onChangeText={(password) => setPassword(password)}
+        />
+        <Button
+          title="Créer un compte"
+          onPress={() => {
+            signin(email, password);
+          }}
+        />
+
+        <Text>OU</Text>
+
         {appleAuthAvailable ? (
           getAppleAuthContent()
         ) : (
