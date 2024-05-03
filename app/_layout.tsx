@@ -11,6 +11,18 @@ export default function RootLayout() {
             headerShown: false,
           }}
         />
+        <Stack.Screen
+          name="(public)/signin"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="(public)/signup"
+          options={{
+            headerShown: false,
+          }}
+        />
       </Stack>
     </AuthProvider>
   );
