@@ -1,19 +1,17 @@
 import { useEffect, useState } from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import * as AppleAuthentication from "expo-apple-authentication";
 import { jwtDecode } from "jwt-decode";
 import * as SecureStore from "expo-secure-store";
 import "core-js/stable/atob";
-import { useAuth } from "../../context/AuthProvider";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../config/firebase.config";
-import { Link, router } from "expo-router";
+import { router } from "expo-router";
 import { Button, TextInput } from "react-native-paper";
 
 export default function Signup() {
-  const { setUser, login } = useAuth();
   const [appleAuthAvailable, setAppleAuthAvailable] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,7 +21,7 @@ export default function Signup() {
   const signin = async (email: string, password: string) => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      setUser({ email });
+      router.replace("/(auth)/(tabs)");
     } catch (error) {
       console.log(error);
     }
@@ -52,7 +50,7 @@ export default function Signup() {
           buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.BLACK}
           cornerRadius={5}
           style={styles.appleButton}
-          onPress={login}
+          onPress={() => {}}
         />
       );
     } else {
@@ -60,16 +58,12 @@ export default function Signup() {
         email: string;
         exp: number;
       }>(userToken.identityToken!);
-
-      setUser({
-        email: decoded.email,
-      });
     }
   };
 
   return (
     <SafeAreaProvider>
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <TextInput
           mode="outlined"
           autoCapitalize="none"
@@ -118,7 +112,7 @@ export default function Signup() {
         >
           Créer un compte
         </Button>
-      </View>
+      </SafeAreaView>
       <StatusBar style="auto" />
     </SafeAreaProvider>
   );
@@ -127,26 +121,25 @@ export default function Signup() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
+    alignItems: "stretch",
     justifyContent: "center",
+    margin: 10,
   },
   appleButton: {
-    width: 200,
     height: 44,
     borderRadius: 4,
     marginTop: 4,
   },
   button: {
-    width: 200,
     marginTop: 10,
     borderRadius: 4,
   },
   input: {
     height: 40,
-    width: 200,
     borderRadius: 4,
   },
   text: {
+    alignSelf: "center",
     fontSize: 20,
     fontWeight: "bold",
     margin: 10,

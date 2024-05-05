@@ -1,9 +1,11 @@
 import { FontAwesome } from "@expo/vector-icons";
 import { BottomTabBar } from "@react-navigation/bottom-tabs";
 import { BlurView } from "expo-blur";
-import { Tabs } from "expo-router";
-import React from "react";
+import { Tabs, router } from "expo-router";
+import { onAuthStateChanged } from "firebase/auth";
+import React, { useEffect, useState } from "react";
 import { Platform } from "react-native";
+import { auth } from "../../../config/firebase.config";
 
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>["name"];
@@ -13,6 +15,25 @@ function TabBarIcon(props: {
 }
 
 export default function TabsLayout() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
+        router.replace("/signin");
+      }
+    });
+
+    return unsubscribe;
+  }, []);
+
+  if (!isLoggedIn) {
+    return null;
+  }
+
   return (
     <Tabs
       initialRouteName="home"
@@ -20,7 +41,6 @@ export default function TabsLayout() {
         tabBarStyle: Platform.OS === "ios" && {
           backgroundColor: "transparent",
         },
-        // headerShown: false,
       }}
       tabBar={(props) =>
         Platform.OS === "ios" ? (
