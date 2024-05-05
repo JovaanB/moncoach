@@ -1,7 +1,62 @@
 [
-  { "id": 1, "title": "Boxing science v2", "subtitle": "Force s1" },
-  { "id": 2, "title": "Boxing science v2", "subtitle": "Force s2" },
-  { "id": 3, "title": "Boxing science v2", "subtitle": "Cardio s1" },
-  { "id": 4, "title": "Boxing science v2", "subtitle": "Cardio s2" },
-  { "id": 5, "title": "Boxing science v2", "subtitle": "Cardio s3" }
+  {
+    "id": 1,
+    "title": "Boxing science v2",
+    "subtitle": "Force s1",
+    "duration": 60
+  },
+  {
+    "id": 2,
+    "title": "Boxing science v2",
+    "subtitle": "Force s2",
+    "duration": 60
+  },
+  {
+    "id": 3,
+    "title": "Boxing science v2",
+    "subtitle": "Force s3",
+    "duration": 60
+  },
+  {
+    "id": 4,
+    "title": "Boxing science v2",
+    "subtitle": "Cardio s1",
+    "duration": 30
+  },
+  {
+    "id": 5,
+    "title": "Boxing science v2",
+    "subtitle": "Cardio s2",
+    "duration": 30
+  },
+  {
+    "id": 6,
+    "title": "Boxing science v2",
+    "subtitle": "Cardio s3",
+    "duration": 30
+  },
+  {
+    "id": 7,
+    "title": "Boxing science v2",
+    "subtitle": "Cardio s4",
+    "duration": 45
+  },
+  {
+    "id": 8,
+    "title": "Boxing science v2",
+    "subtitle": "Cardio s5",
+    "duration": 45
+  },
+  {
+    "id": 9,
+    "title": "Boxing science v2",
+    "subtitle": "Cardio s6",
+    "duration": 50
+  },
+  {
+    "id": 10,
+    "title": "Boxing science v2",
+    "subtitle": "Cardio s7",
+    "duration": 35
+  }
 ]

@@ -9,8 +9,8 @@ import { Button, Card, IconButton, Text } from "react-native-paper";
 import trainings from "../../../data.json";
 
 export default function Home() {
-  const cardGap = 16;
-  const cardWidth = (Dimensions.get("window").width - cardGap * 3) / 2;
+  const cardGap = 10;
+  const cardWidth = (Dimensions.get("window").width - cardGap * 3) / 2.1;
 
   return (
     <SafeAreaView style={styles.container}>
@@ -42,19 +42,17 @@ export default function Home() {
               styles.oneCard,
               {
                 marginTop: cardGap,
-                marginLeft: i % 2 !== 0 ? cardGap : 0,
                 width: cardWidth,
               },
             ]}
           >
             <Card.Content>
-              <Text variant="headlineSmall">{training.title}</Text>
+              <Text variant="titleMedium">{training.title}</Text>
               <Text variant="bodyLarge">{training.subtitle}</Text>
             </Card.Content>
             <Card.Actions>
-              <Button mode="elevated" onPress={() => {}}>
-                Démarrer
-              </Button>
+              <Text variant="bodySmall">{training.duration} min</Text>
+              <IconButton size={16} icon="play" onPress={() => {}} />
             </Card.Actions>
           </Card>
         ))}
@@ -69,6 +67,7 @@ const styles = StyleSheet.create({
     alignItems: "stretch",
     justifyContent: "flex-start",
     margin: 10,
+    marginBottom: Dimensions.get("window").height / 10,
   },
   title: { marginHorizontal: 10, marginVertical: 30, alignSelf: "flex-start" },
   subTitleContainer: {
@@ -81,13 +80,12 @@ const styles = StyleSheet.create({
   scrollContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
-    alignContent: "flex-start",
-    justifyContent: "center",
-    paddingBottom: Dimensions.get("window").height * 0.1,
+    justifyContent: "space-around",
+    paddingVertical: 10,
   },
   oneCard: {
-    backgroundColor: "white",
     borderRadius: 8,
     shadowOpacity: 0.3,
+    backgroundColor: "white",
   },
 });
