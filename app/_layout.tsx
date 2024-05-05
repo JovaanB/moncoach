@@ -13,6 +13,12 @@ export default function RootLayout() {
           }}
         />
         <Stack.Screen
+          name="(auth)/training"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
           name="(public)/signin"
           options={{
             headerShown: false,

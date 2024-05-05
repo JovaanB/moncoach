@@ -17,15 +17,7 @@ export default function Accout() {
     <SafeAreaView style={styles.container}>
       <Text variant="headlineSmall">Mon compte</Text>
       <Text variant="bodyMedium">{email}</Text>
-      <Card
-        style={{
-          width: Dimensions.get("window").width - 20,
-          padding: 20,
-          backgroundColor: "white",
-          marginTop: "auto",
-          borderRadius: 10,
-        }}
-      >
+      <Card style={styles.oneCard}>
         <Button
           style={{ marginTop: 6 }}
           mode="elevated"
@@ -33,7 +25,7 @@ export default function Accout() {
             signOut(auth);
           }}
         >
-          Logout
+          Se déconnecter
         </Button>
       </Card>
     </SafeAreaView>
@@ -47,5 +39,12 @@ const styles = StyleSheet.create({
     marginBottom: Dimensions.get("window").height / 15,
     alignItems: "center",
     justifyContent: "flex-start",
+  },
+  oneCard: {
+    width: Dimensions.get("window").width - 20,
+    padding: 20,
+    backgroundColor: "white",
+    marginTop: "auto",
+    borderRadius: 10,
   },
 });

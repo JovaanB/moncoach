@@ -7,6 +7,7 @@ import {
 } from "react-native";
 import { Button, Card, IconButton, Text } from "react-native-paper";
 import trainings from "../../../data.json";
+import { router } from "expo-router";
 
 export default function Home() {
   const cardGap = 10;
@@ -51,8 +52,24 @@ export default function Home() {
               <Text variant="bodyLarge">{training.subtitle}</Text>
             </Card.Content>
             <Card.Actions>
+              <IconButton
+                size={16}
+                style={{ marginRight: "auto" }}
+                icon="playlist-edit"
+                mode="contained"
+                onPress={() => {}}
+              />
               <Text variant="bodySmall">{training.duration} min</Text>
-              <IconButton size={16} icon="play" onPress={() => {}} />
+              <IconButton
+                size={16}
+                icon="play"
+                onPress={() =>
+                  router.push({
+                    pathname: "training",
+                    params: { id: training.id },
+                  })
+                }
+              />
             </Card.Actions>
           </Card>
         ))}
