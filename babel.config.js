@@ -19,6 +19,14 @@ module.exports = function (api) {
           allowUndefined: true,
         },
       ],
+      [
+        "module-resolver",
+        {
+          alias: {
+            config: "./config",
+          },
+        },
+      ],
     ],
   };
 };

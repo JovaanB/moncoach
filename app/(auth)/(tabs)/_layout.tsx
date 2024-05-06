@@ -5,7 +5,7 @@ import { Tabs, router } from "expo-router";
 import { onAuthStateChanged } from "firebase/auth";
 import React, { useEffect, useState } from "react";
 import { Platform } from "react-native";
-import { auth } from "../../../config/firebase.config";
+import { auth } from "config/firebase.config";
 
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>["name"];
@@ -62,6 +62,26 @@ export default function TabsLayout() {
           headerShown: false,
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="dashboard" color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="tools"
+        options={{
+          title: "Outils",
+          headerShown: false,
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="bullseye" color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="stats"
+        options={{
+          title: "Statistiques",
+          headerShown: false,
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="bar-chart-o" color={color} />
           ),
         }}
       />

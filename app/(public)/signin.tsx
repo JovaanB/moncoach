@@ -7,7 +7,7 @@ import { jwtDecode } from "jwt-decode";
 import * as SecureStore from "expo-secure-store";
 import "core-js/stable/atob";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../config/firebase.config";
+import { auth } from "config/firebase.config";
 import { router } from "expo-router";
 import { Button, TextInput } from "react-native-paper";
 
@@ -94,11 +94,7 @@ export default function Signup() {
           Se connecter
         </Button>
 
-        {appleAuthAvailable ? (
-          getAppleAuthContent()
-        ) : (
-          <Text>Apple Auth not available</Text>
-        )}
+        {appleAuthAvailable ? getAppleAuthContent() : <Text />}
 
         <Text style={styles.text}>OU</Text>
 

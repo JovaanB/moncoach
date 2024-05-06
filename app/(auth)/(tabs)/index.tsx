@@ -4,6 +4,7 @@ import {
   View,
   ScrollView,
   Dimensions,
+  Platform,
 } from "react-native";
 import { Button, Card, IconButton, Text } from "react-native-paper";
 import trainings from "../../../data.json";
@@ -83,8 +84,10 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "stretch",
     justifyContent: "flex-start",
-    margin: 10,
-    marginBottom: Dimensions.get("window").height / 10,
+    padding: Platform.OS === "ios" ? 0 : 10,
+    margin: Platform.OS === "ios" ? 10 : 0,
+    paddingBottom: 0,
+    marginBottom: Platform.OS === "ios" ? 80 : 0,
   },
   title: { marginHorizontal: 10, marginVertical: 30, alignSelf: "flex-start" },
   subTitleContainer: {
@@ -98,7 +101,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-around",
-    paddingVertical: 10,
+    paddingBottom: 10,
   },
   oneCard: {
     borderRadius: 8,
